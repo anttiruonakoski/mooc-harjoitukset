@@ -17,7 +17,6 @@ class App extends React.Component {
     }
   }
 
-
   render() {
 
     const sumValues = obj => Object.values(obj).reduce((a, b) => a + b);
