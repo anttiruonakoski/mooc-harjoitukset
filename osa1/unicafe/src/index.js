@@ -33,37 +33,37 @@ class App extends React.Component {
 
     const sumValues = obj => Object.values(obj).reduce((a, b) => a + b);
 
-    const Statistics = (props) => {
+    const Statistics = ({ counters }) => {
       return(
         <div>
         <h3>statistiikka</h3>
-        <Statistic quality='hyvä' counter={this.state.good}/>
-        <Statistic quality='neutraali' counter={this.state.neutral}/>
-        <Statistic quality='huono' counter={this.state.bad}/>
-        <Statistic quality='keskiarvo' counter={parseFloat((this.state.good-this.state.bad)/sumValues(this.state)).toFixed(2)}/>
-        <Statistic quality='positiivisia' counter={parseFloat((this.state.good)/sumValues(this.state)*100).toFixed(1) + " %"}/>
+        <Statistic quality='hyvä' counter={counters.good}/>
+        <Statistic quality='neutraali' counter={counters.neutral}/>
+        <Statistic quality='huono' counter={counters.bad}/>
+        <Statistic quality='keskiarvo' counter={parseFloat((counters.good-counters.bad)/sumValues(counters)).toFixed(2)}/>
+        <Statistic quality='positiivisia' counter={parseFloat((counters.good)/sumValues(counters)*100).toFixed(1) + " %"}/>
         </div>
         )
     }
 
-    const Statistic = (props) => <div>{props.quality} {props.counter}</div>
+    const Statistic = ({ quality, counter }) => <div>{quality} {counter}</div>
+
+    const Button = ({ handleClick, text }) => (
+      <button onClick={handleClick}>
+        {text}
+      </button>
+    )
 
     return (
       <div>
         <h3>anna palautetta</h3>
         <div>
-          <button onClick={this.addGood}>
-            hyvä
-          </button>
-          <button onClick={this.addNeutral}>
-            neutraali
-          </button>
-          <button onClick={this.addBad}>
-            huono
-          </button>
+          <Button text='hyvä' handleClick={this.addGood}/>
+          <Button text='neutraali' handleClick={this.addNeutral}/>
+          <Button text='huono' handleClick={this.addBad}/>
         </div>
         <div>
-        <Statistics counter={this.state}/>
+        <Statistics counters={this.state}/>
         </div>
       </div>
     )
