@@ -1,6 +1,7 @@
 import React from 'react';
-import Henkilo from './Henkilo'
-import LisaaHenkilo from './LisaaHenkilo'
+import Henkilo from './components/Henkilo'
+import LisaaHenkilo from './components/LisaaHenkilo'
+import SuodataHenkilo from './components/SuodataHenkilo'
 
 class App extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class App extends React.Component {
 
 	  const persons = this.state.persons.concat(personObject)
 
-    if (this.state.persons.some( persons => persons.name === this.state.newName ) === false) {
+    if (this.state.persons.some(persons => persons.name === this.state.newName) === false) {
       this.setState({
       persons,
       newName: '',
@@ -47,17 +48,30 @@ class App extends React.Component {
 	}
 
   render() {
+
+    const shownPersons = (filter) => {
+      return (
+        this.state.persons.filter(person=>person.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+      )
+    }
+
     return (
 
       <div>
         <h2>Puhelinluettelo</h2>
+        <SuodataHenkilo
+          handlechange={this.handleChange}
+          filter={this.state.filter}
+        />
+        <h2>Lisää uusi</h2>
         <LisaaHenkilo
         	newname={this.state.newName}
           newnumber={this.state.newNumber}
         	handlechange={this.handleChange}
-        	addperson={this.addPerson} />
+          addperson={this.addPerson}
+          />
         <h2>Numerot</h2>
-        { this.state.persons.map(person=><Henkilo key={person.name} person={person} />) }
+        { shownPersons(this.state.filter).map(person=><Henkilo key={person.name} person={person} />) }
       </div>
 
     )
