@@ -18,14 +18,17 @@ class App extends React.Component {
   }
 
   addVote = (selected) => {
-      return () => {
-      const c = [...this.state.votes]
-			c[selected] += 1
-      this.setState({ votes: c })
-      }
+    return () => {
+    const c = [...this.state.votes]
+		c[selected] += 1
+    this.setState({ votes: c })
     }
+  }
 
   render() {
+
+    const votes = this.state.votes
+    const mostVotes = votes.indexOf(Math.max(...votes))
 
 	  const Anecdote = ({ selected }) => {
 	  	return (
@@ -52,21 +55,13 @@ class App extends React.Component {
 	  	)
 	  }
 
-	  const MostVotes = ({ selected }) => <div>
-	  	<h2>
-	  		anecdote with most votes:
-	 		</h2>
-				{this.props.anecdotes[selected]} <br/>
-				has {this.state.votes[selected]} votes
-	  </div>
-
     return (
     	<div>
         <Anecdote selected={this.state.selected} />
         <VoteButton selected={this.state.selected} />
         <NextButton />
         <h2>anecdote with most votes:</h2>
-        <Anecdote selected={3} />
+        <Anecdote selected={mostVotes} />
       </div>
     )
   }
