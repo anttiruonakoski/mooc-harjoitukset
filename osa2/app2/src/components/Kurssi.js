@@ -11,7 +11,7 @@ const Otsikko = ({ nimi }) => {
 const Sisalto = ({ osat }) => {
 	return (
 		<div>
-			{osat.map(osa=><Osa osa={osa} />)}
+			{osat.map(osa=><Osa key={osa.id} osa={osa} />)}
 		</div>
 	)
 }
